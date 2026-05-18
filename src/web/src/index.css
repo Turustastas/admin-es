@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+:root {
+  --admin-primary: #1e40af;
+  --admin-secondary: #3b82f6;
+  --admin-success: #16a34a;
+  --admin-warning: #d97706;
+  --admin-danger: #dc2626;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}

@@ -1,0 +1,32 @@
+{
+  "name": "admin-es",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Panel de Administración — Escrituria España (Escrituria Local + RGPD)",
+  "workspaces": [
+    "src/api",
+    "src/web"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w src/api\" \"npm run dev -w src/web\"",
+    "dev:api": "npm run dev -w src/api",
+    "dev:web": "npm run dev -w src/web",
+    "build": "npm run build -w src/api && npm run build -w src/web",
+    "build:api": "npm run build -w src/api",
+    "build:web": "npm run build -w src/web",
+    "start": "npm run start -w src/api",
+    "setup": "npm install && npm run build",
+    "docker:build": "docker compose -f deploy/docker-compose.yml build",
+    "docker:up": "docker compose -f deploy/docker-compose.yml up -d",
+    "qa": "node scripts/qa-admin.mjs"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Turustastas/admin-es.git"
+  },
+  "author": "Alpha Services",
+  "license": "UNLICENSED"
+}

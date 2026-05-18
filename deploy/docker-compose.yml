@@ -1,0 +1,49 @@
+# ===========================================
+# admin-es — Docker Compose (Dokploy)
+# Panel Administración Escrituria España
+# ===========================================
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile.api
+    container_name: admin-es-api
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=4001
+      - CORS_ORIGIN=${CORS_ORIGIN:-https://admin.escrituria.es}
+      - DATABASE_URL=${DATABASE_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - ASTREA_GATEWAY_URL=${ASTREA_GATEWAY_URL:-http://host.docker.internal:18789}
+      - ASTREA_GATEWAY_TOKEN=${ASTREA_GATEWAY_TOKEN}
+      - UPLOAD_DIR=/app/uploads
+      - OUTPUT_DIR=/app/output
+    volumes:
+      - admin_es_uploads:/app/uploads
+      - admin_es_output:/app/output
+    ports:
+      - "4001:4001"
+    networks:
+      - admin-es-network
+
+  web:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile.web
+    container_name: admin-es-web
+    restart: unless-stopped
+    ports:
+      - "4002:80"
+    depends_on:
+      - api
+    networks:
+      - admin-es-network
+
+volumes:
+  admin_es_uploads:
+  admin_es_output:
+
+networks:
+  admin-es-network:
+    driver: bridge

@@ -1,0 +1,27 @@
+# ===========================================
+# admin-es — Dockerfile API
+# Panel Administración Escrituria España
+# ===========================================
+FROM node:22-alpine AS builder
+
+WORKDIR /app
+COPY package*.json ./
+COPY src/api/package*.json ./src/api/
+RUN npm install -w src/api
+
+COPY tsconfig.json ./
+COPY src/api/src ./src/api/src
+COPY src/api/tsconfig.json ./src/api/
+RUN npm run build -w src/api
+
+FROM node:22-alpine AS runner
+WORKDIR /app
+COPY --from=builder /app/src/api/dist ./dist
+COPY --from=builder /app/src/api/node_modules ./node_modules
+COPY --from=builder /app/node_modules ./node_modules
+
+ENV NODE_ENV=production
+ENV PORT=4001
+EXPOSE 4001
+
+CMD ["node", "dist/index.js"]

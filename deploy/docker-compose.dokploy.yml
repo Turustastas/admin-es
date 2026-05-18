@@ -1,0 +1,21 @@
+# ===========================================
+# admin-es — Dokploy Auto-Provision
+# Copia esto como base para el contenedor en Dokploy
+# ===========================================
+# Dokploy configuration guide:
+#
+# 1. Repositorio: https://github.com/Turustastas/admin-es
+# 2. Rama: main
+# 3. Build: Dockerfile
+# 4. Puerto: 4002 (web) / 4001 (api si expones directo)
+# 5. Variables de entorno requeridas:
+#    - DATABASE_URL (postgresql://...)
+#    - JWT_SECRET (string seguro)
+#    - CORS_ORIGIN (https://admin.escrituria.es)
+#
+# Opcional:
+#    - ASTREA_GATEWAY_URL
+#    - ASTREA_GATEWAY_TOKEN
+#
+# Para Dokploy single-container: usa deploy/Dockerfile.web
+# y apunta el reverse proxy a /api -> api:4001
